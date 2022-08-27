@@ -4,6 +4,7 @@ An easy-to-use API wrapper for FiveM. This library also has 100% API coverage
 ## Usage
 To use the API you will need to make an instance of FivemServer with the server ip and port (defaults to 30120).
 Then to get server information you will need to fetch(), or to get player information you will need to fetchPlayers().
+
 ```js
 FivemServer = require("full-fivem-api")
 
@@ -15,7 +16,8 @@ async function main() {
     console.log(server.players);
 }
 ```
-### Data:
+### Available data:
+```
 FivemServer.players (populated with fetchPlayers)
 FivemServer.requestSteamTicket
 FivemServer.icon
@@ -38,3 +40,4 @@ FivemServer.scriptHookAllowed
 FivemServer.tags
 FivemServer.txAdminVersion
 FivemServer.version
+```
