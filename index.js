@@ -209,9 +209,3 @@ class FivemServer {
 }
 module.exports = FivemServer;
 
-async function test() {
-    const server = new FivemServer("woenselcombat.us.to");
-    const players = await server.getLocale();
-    console.log(players);
-}
-test();
