@@ -6,14 +6,16 @@ To use the API you will need to make an instance of FivemServer with the server 
 Then to get server information you will need to fetch(), or to get player information you will need to fetchPlayers().
 
 ```js
-FivemServer = require("full-fivem-api")
+{FivemServer,IdentifierType} = require("full-fivem-api")
 
 async function main() {
-    const server = new FivemServer("woenselcombat.us.to");
+    const server = new FivemServer("IP");
     await server.fetch();
     console.log(server.maxClients);
     await server.fetchPlayers();
     console.log(server.players);
+    console.log(server.getUserByName("NAME"))
+    console.log(server.getUserByIdentifier(IdentifierType.discord,"DISCORD-ID"))
 }
 ```
 ### Available data:

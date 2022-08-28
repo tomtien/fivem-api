@@ -1,4 +1,25 @@
 const axios = require('axios');
+class FivemPlayer {
+    constructor(endpoint, id, identifiers, name, ping) {
+        this.endpoint = endpoint;
+        this.id = id;
+        this.identifiers = identifiers;
+        this.name = name;
+        this.ping = ping;
+    }
+    hasIdentifier(identifierType, identifier) {
+        return this.identifiers[identifierType] === identifier;
+    }
+}
+const IdentifierType = {
+    steam: 'steam',
+    license: 'license',
+    xbl: 'xbl',
+    live: 'live',
+    discord: 'discord',
+    fivem: 'fivem',
+    license2: 'license2'
+}
 
 class FivemServer {
     constructor(ip, port = 30120, options = {}) {
@@ -79,14 +100,61 @@ class FivemServer {
                 .get(this.uri("players.json"), { timeout: this.options.timeout })
                 .then((body) => {
                     const data = body.data;
-                    this.players = data;
-                    result(data);
+                    const players = data.map((playerData) => {
+                        const identifiers = {}
+                        playerData.identifiers.forEach(
+                            (ident) => {
+                                const identParts = ident.split(":");
+                                const identType = identParts[0];
+                                const identIdentifier = identParts[1];
+                                switch (identType) {
+                                    case "steam":
+                                        identifiers[IdentifierType.steam] = identIdentifier;
+                                        break;
+                                    case "license":
+                                        identifiers[IdentifierType.license] = identIdentifier;
+                                        break;
+                                    case "xbl":
+                                        identifiers[IdentifierType.xbl] = identIdentifier;
+                                        break;
+                                    case "live":
+                                        identifiers[IdentifierType.live] = identIdentifier;
+                                        break;
+                                    case "discord":
+                                        identifiers[IdentifierType.discord] = identIdentifier;
+                                        break;
+                                    case "fivem":
+                                        identifiers[IdentifierType.fivem] = identIdentifier;
+                                        break;
+                                    case "license2":
+                                        identifiers[IdentifierType.license2] = identIdentifier;
+                                        break;
+                                }
+                                return {}
+                            });
+                        return new FivemPlayer(playerData.endpoint, playerData.id, identifiers, playerData.name, playerData.ping)
+                    })
+                    this.players = players;
+                    result(players);
                 }).catch((e) => {
                     err(e);
                 });
         });
     }
+    getUserByIdentifier(identifierType, identifier) {
+        if (!this.players) return undefined;
+        return this.players.find((player) => {
+            return player.hasIdentifier(identifierType, identifier);
+        })
+    }
+    getUserByName(name) {
+        if (!this.players) return undefined;
+        return this.players.find((player) => player.name === name)
+    }
 }
+
+module.exports.IdentifierType = IdentifierType;
+module.exports.FivemServer = FivemServer;
 
 async function main() {
     const server = new FivemServer("woenselcombat.us.to", 30120, { timeout: 1000 });
@@ -94,7 +162,8 @@ async function main() {
     console.log(server.maxClients);
     await server.fetchPlayers();
     console.log(server.players);
+    console.log(server.getUserByName("Stuifmeel"));
 }
 main();
-module.exports = FivemServer;
+
 
