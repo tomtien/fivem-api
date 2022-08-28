@@ -10,12 +10,15 @@ Then to get server information you will need to fetch(), or to get player inform
 
 async function main() {
     const server = new FivemServer("IP");
-    await server.fetch();
-    console.log(server.maxClients);
-    await server.fetchPlayers();
-    console.log(server.players);
-    console.log(server.getUserByName("NAME"))
-    console.log(server.getUserByIdentifier(IdentifierType.discord,"DISCORD-ID"))
+    const status =  await server.fetch();
+    if(status.online){
+        console.log(server.maxClients);
+        await server.fetchPlayers();
+        console.log(server.players);
+        console.log(server.getUserByName("NAME"))
+        console.log(server.getUserByIdentifier(IdentifierType.discord,"DISCORD-ID"))
+    }
+    
 }
 ```
 ### Available data:

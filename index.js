@@ -88,9 +88,9 @@ class FivemServer {
                     this.txAdminVersion = data.vars["txAdmin-version"];
                     this.version = data.version;
 
-                    result(data);
+                    result({ online: true });
                 }).catch((e) => {
-                    err(e);
+                    result({ online: false });
                 });
         });
     }
@@ -165,5 +165,4 @@ async function main() {
     console.log(server.getUserByName("Stuifmeel"));
 }
 main();
-
 
