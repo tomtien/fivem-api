@@ -12,6 +12,7 @@ async function main() {
     const server = new FivemServer("IP");
     const status =  await server.fetch();
     if(status.online){
+        // if (status.online === false) these fields would be null
         console.log(server.maxClients);
         await server.fetchPlayers();
         console.log(server.players);

@@ -90,6 +90,27 @@ class FivemServer {
 
                     result({ online: true });
                 }).catch((e) => {
+                    this.requestSteamTicket = null;
+                    this.icon = null;
+                    this.resources = null;
+                    this.server = null;
+                    this.bannerConnecting = null;
+                    this.bannerDetailed = null;
+                    this.game = null;
+                    this.locale = null;
+                    this.onesyncEnabled = null;
+                    this.enforceGameBuild = null;
+                    this.enhancedHostSupport = null;
+                    this.lan = null;
+                    this.licenseKeyToken = null;
+                    this.maxClients = null;
+                    this.projectDesc = null;
+                    this.projectName = null;
+                    this.pureLevel = null;
+                    this.scriptHookAllowed = null;
+                    this.tags = null;
+                    this.txAdminVersion = null;
+                    this.version = null;
                     result({ online: false });
                 });
         });
@@ -137,6 +158,7 @@ class FivemServer {
                     this.players = players;
                     result(players);
                 }).catch((e) => {
+                    this.players = null;
                     err(e);
                 });
         });
@@ -156,13 +178,4 @@ class FivemServer {
 module.exports.IdentifierType = IdentifierType;
 module.exports.FivemServer = FivemServer;
 
-async function main() {
-    const server = new FivemServer("woenselcombat.us.to", 30120, { timeout: 1000 });
-    await server.fetch();
-    console.log(server.maxClients);
-    await server.fetchPlayers();
-    console.log(server.players);
-    console.log(server.getUserByName("Stuifmeel"));
-}
-main();
 
