@@ -159,7 +159,7 @@ class FivemServer {
                     result(players);
                 }).catch((e) => {
                     this.players = null;
-                    err(e);
+                    result({ online: false });
                 });
         });
     }
