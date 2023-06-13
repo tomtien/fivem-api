@@ -6,7 +6,7 @@ To use the API you will need to make an instance of FivemServer with the server 
 Then to get server information you will need to fetch(), or to get player information you will need to fetchPlayers().
 
 ```js
-{FivemServer,IdentifierType} = require("full-fivem-api")
+const {FivemServer,IdentifierType} = require("full-fivem-api")
 
 async function main() {
     const server = new FivemServer("IP");
